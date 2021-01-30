@@ -66,7 +66,7 @@ export default class extends Vue {
   private name: String = 'FADI CMS'
   private username: String = ''
   private password: String = ''
-  private loading:Boolean = false
+  private loading: Boolean = false
 
   @Ref('observer') readonly form!: VForm
   private async onLogin() {
@@ -80,7 +80,7 @@ export default class extends Vue {
     setTimeout(() => {
       this.$buefy.notification.open({
         duration: 4500,
-        message: 'Đã đăng xuất hệ thống ,jiji 😎!',
+        message: 'Đăng nhập thành công~ 😎!',
         type: 'is-success',
         hasIcon: true,
         animation: 'slide-left'
@@ -94,9 +94,8 @@ export default class extends Vue {
 
 <style lang="sass">
 .auth-page
-  width: $w-screen
-  height: $h-screen
   background-color: $base-background-color
+  @include full-viewport
   .auth-page-title
     font-size: 32px
     font-weight: 600

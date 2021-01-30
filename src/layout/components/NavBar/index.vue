@@ -1,0 +1,302 @@
+<template>
+  <nav
+    id="navbar"
+    class="pl-1 is-flex is-align-items-center navbar"
+    :style="navbarStyle"
+  >
+    <div class="menu_wrapper ml-3" @click="toggleMenu">
+      <span class="hamburger-menu"></span>
+    </div>
+    <div class="navbar__end">
+      <!-- <div
+        class="notifications mr-6 is-flex is-align-items-center"
+        @click.stop="showNoti = !showNoti"
+      >
+        <b-icon icon="bell" class="notifications__icon" />
+        <span
+          v-if="totalNotificationsUnread"
+          class="notifications__counter is-flex is-align-items-center is-justify-content-center"
+          >{{ totalNotificationsUnread | totalNotificationsConvert }}</span
+        >
+        <notifications class="notifications__card" :show="showNoti" />
+      </div> -->
+      <full-screen class="mr-6" />
+      <!-- <div
+        v-click-outside="closeNotificationCard"
+        class="user mr-5 mt-1 is-flex is-align-items-center"
+        @click.stop="showUserSetting = !showUserSetting"
+      >
+        <avatar :size="32" />
+        <b-icon
+          class="is-pulled-right pb-1 ml-2 user__icon"
+          icon="menu-right"
+          :class="showUserSetting && `rotate-90`"
+        ></b-icon>
+        <transition name="upper" :duration="{leave: 0}" mode="out-in">
+          <div
+            v-show="showUserSetting"
+            v-click-outside="closeUserCard"
+            class="user__dropdown"
+          >
+            <p class="user__dropdown__title">@Tandv95</p>
+            <div
+              class="user__dropdown__menu-list py-2 is-flex is-flex-direction-column"
+            >
+              <router-link to="/" class="user__dropdown__menu-list__link">
+                <b-icon
+                  icon="account"
+                  custom-size="mdi-18px"
+                  class="mb-1"
+                ></b-icon>
+                <span>Tài khoản</span>
+              </router-link>
+              <router-link to="/" class="user__dropdown__menu-list__link">
+                <b-icon icon="cog" custom-size="mdi-18px" class="mb-1"></b-icon>
+                <span>Cài đặt</span>
+              </router-link>
+            </div>
+          </div>
+        </transition>
+      </div> -->
+    </div>
+  </nav>
+</template>
+
+<script lang="ts">
+import FullScreen from '../FullScreen/index.vue'
+// import Notifications from '@/components/notifications/index.vue'
+// import Avatar from '@/components/avatar/index.vue'
+import { SideBarStatusType } from '@/enums/appEnum'
+
+import { AppModule } from '@/store/modules/app'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component({
+  name: 'Navbar',
+  components: {
+    FullScreen
+  }
+})
+
+export default class extends Vue {
+  @Prop({
+    default: 'fixed',
+    validator: (val: string) => ['fixed', 'relative', 'static', 'absolute'].includes(val)
+  }) private position!: string
+
+  get navbarStyle() {
+    const widthComplement =
+        AppModule.getSideBarStatus === SideBarStatusType.HIDDEN
+          ? 0
+          : AppModule.getSideBarStatus === SideBarStatusType.EXPANDED
+            ? 80
+            : 200
+    return {
+      width: `calc(100% - ${widthComplement}px)`,
+      position: this.position
+    } as HTMLElement['style']
+  }
+
+  private toggleMenu() {
+    AppModule.commitToggleSideBar()
+  }
+
+  beforeMount() {
+    window.addEventListener('resize', AppModule.commitSetLayoutSize)
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('resize', AppModule.commitSetLayoutSize)
+  }
+}
+// import {
+//   defineComponent,
+//   computed,
+//   useContext,
+//   ref,
+//   PropType
+// } from '@routerjs/composition-api'
+
+// export default defineComponent({
+//   components: {
+//     FullScreen,
+//     Notifications,
+//     Avatar
+//   },
+//   props: {
+//     position: {
+//       type: String,
+//       require: true,
+//       validator: (val: string) =>
+//         ['fixed', 'absolute', 'static', 'relative'].includes(val),
+//       default: 'fixed'
+//     },
+//     sidebarStatus: {
+//       type: String as PropType<SideBarStatusType>,
+//       default: SideBarStatusType.HIDDEN
+//     },
+//     totalNotificationsUnread: {
+//       type: Number,
+//       default: 11
+//     }
+//   },
+//   setup(props) {
+//     const showNoti = ref(false)
+//     const showUserSetting = ref(false)
+//     // Declare Vuex Module
+//     const AppModule = getModule(App, useContext().store)
+//     const toggleMenu = () => AppModule.commitToggleSideBar()
+//     const setLayoutSize = () => AppModule.commitSetLayoutSize()
+//     const closeNotificationCard = () => {
+//       showNoti.value = false
+//     }
+//     const closeUserCard = () => {
+//       showUserSetting.value = false
+//     }
+//     const navBarStyle = computed(() => {
+//       const widthComplement =
+//         props.sidebarStatus === SideBarStatusType.HIDDEN
+//           ? 0
+//           : props.sidebarStatus === SideBarStatusType.EXPANDED
+//             ? 80
+//             : 200
+//       return {
+//         width: `calc(100% - ${widthComplement}px)`,
+//         position: props.position
+//       } as HTMLElement['style']
+//     })
+//     return {
+//       navBarStyle,
+//       toggleMenu,
+//       showNoti,
+//       showUserSetting,
+//       closeNotificationCard,
+//       setLayoutSize,
+//       closeUserCard
+//     }
+//   },
+//   filters: {
+//     totalNotificationsConvert: (value: Number) => {
+//       return value > 10 ? '10+' : value
+//     }
+//   },
+//   created() {
+//     window.addEventListener('resize', this.setLayoutSize)
+//   },
+//   destroyed() {
+//     window.removeEventListener('resize', this.setLayoutSize)
+//   }
+// })
+</script>
+
+<style lang="sass" scoped>
+.navbar
+  width: $w-full
+  z-index: 1
+  height: 3.75rem
+  right: 0
+  transition: width $base-animation-timer-default
+  justify-content: space-between
+  background: $base-background-color
+  box-shadow: 0.125rem 0.125rem 0.3125rem $base-shadow-impact-rb, -0.125rem -0.125rem 0.3125rem transparent
+  @include border-light
+  @include base-border(bottom)
+  .menu_wrapper
+    height: 1.75rem
+    width: 1.875rem
+    position: realtive
+    cursor: pointer
+    .hamburger-menu
+      display: block
+      width: $menu-hamburger-icon-width-medium
+      height: $menu-hamburger-icon-height
+      border-radius: 0.3125rem
+      background: $secondary
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      transition: all $base-animation-timer-default $ease-in-out-back
+      &::before, &::after
+        position: absolute
+        content: ""
+        height: $menu-hamburger-icon-height
+        background: $secondary
+        border-radius: $base-sm-border-radius
+        transition: all $base-animation-timer-default $ease-in-out-back
+      &::before
+        width: $menu-hamburger-icon-width
+        top: -0.5rem
+      &::after
+        width: $menu-hamburger-icon-width-small
+        bottom: -0.5rem
+    &:hover
+      .hamburger-menu
+        width: $menu-hamburger-icon-width
+        &::after
+          width: $menu-hamburger-icon-width
+  &__end
+    display: flex
+    align-items: center
+    .notifications
+      float: right
+      right: 4rem
+      cursor: pointer
+      &__icon
+        color: $secondary
+        transition: color $base-animation-timer-default
+        &:active
+          color: rgba($secondary, 0.3)
+      &__counter
+        position: relative
+        font-size: 9px
+        font-weight: 500
+        top: -1.2em
+        left: -1.2em
+        height: 22px
+        width: 22px
+        background-color:  $primary
+        color: $base-background-color
+        padding: 0.2em
+        border: 0.2em solid $base-background-color
+        border-radius: 50%
+      &__card
+        right: 8rem
+    .user
+      position: relative
+      &__icon
+        cursor: pointer
+        color: $secondary
+      &__dropdown
+        width: 7.5rem
+        height: auto
+        right: 0
+        top: 3.375rem
+        position: absolute
+        transition: transform $base-animation-timer-default
+        @include neu-style
+        &__title
+          font-size: 14px
+          text-align: center
+          padding: 0.5rem
+          color: rgba($secondary, 0.9)
+          font-weight: weight(bold)
+          @include border-light
+          @include base-border(bottom)
+        &__menu-list
+          &__link
+            height: 2rem
+            display: flex
+            align-items: center
+            padding: 0.25rem
+            color: $base-text-primary-color
+            transition: all $base-animation-timer-default
+            span
+              font-size: 14px
+              font-weight: 600 !important
+            &:hover
+              color: $secondary
+              padding-left: 0.4rem
+            &.active
+              padding: 0.25rem !important
+              color: $secondary
+</style>

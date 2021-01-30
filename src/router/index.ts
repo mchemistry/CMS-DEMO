@@ -7,6 +7,10 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/login',
     component: () => import(/* webpackChunkName: "login" */ '@/pages/login/index.vue')
+  },
+  {
+    path: '/',
+    component: () => import(/* webpackChunkName: "login" */ '@/layout/index.vue')
   }
 ]
 
