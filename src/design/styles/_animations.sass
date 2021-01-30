@@ -1,0 +1,74 @@
+// zoom
+.zoom-enter-active, .zoom-leave-active 
+  transition: transform .4s
+
+.zoom-enter, .zoom-leave-to
+  transform: scale(0.95)
+
+// icon-zoom
+.icon-zoom-enter-active
+  transition: transform .45s
+  transform: scale(1)
+
+.icon-zoom-enter
+  transition: transform .45s
+  transform: scale(1.5)
+
+// slide left
+.slide-left-enter-active, .slide-left-leave-active 
+  transition: transform .3s
+
+.slide-left-enter, .slide-left-leave-to
+  transform: translateX(6.25rem)
+
+
+// slide right
+.slide-right-enter-active, .slide-right-leave-active 
+  transition: transform 0.3s
+
+.slide-right-enter, .slide-right-leave-to
+  transform: translateX(-1rem)
+
+// slide up
+.upper-enter-active
+  transform: translateY(0)
+
+.upper-enter
+  transform: translateY(1.2rem)
+  
+// fade
+.fader-enter-active, .fader-leave-active 
+  transition: opacity 0.5s ease
+
+.fader-enter, .fader-leave-to
+  opacity: 0
+
+// rollcall
+.rollcall-enter-active, .rollcall-leave-active 
+  transition: transform 0.5s
+
+.rollcall-leave-active 
+  transition-delay: 0.6s !important
+
+.rollcall-enter, .rollcall-leave-to
+  transform: translateX(3.25rem)
+
+// zoom-y
+
+.y-enter-active
+  height: auto
+
+.y-enter
+  height: 0 !important
+
+
+.spin
+  animation: spin 1100ms infinite linear
+
+@keyframes spin 
+    from
+      transform: rotate(0deg)
+    to 
+      transform: rotate(360deg)
+
+    

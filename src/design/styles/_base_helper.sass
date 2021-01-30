@@ -1,0 +1,22 @@
+.loading
+    animation: spin 500ms infinite linear
+
+.click-effect
+    &:active
+        color: rgba($white, 0.3)
+
+.btn-fullscreen
+    position: relative
+    z-index: 9999
+    right: 0.5rem
+    border: none !important
+    background: transparent !important
+    box-shadow: none !important
+    transition: box-shadow $base-animation-timer-default
+    span
+        transition: transform $base-animation-timer-default
+        color: rgba($secondary,0.5)
+        &:hover
+            transform: scale(1.2)
+            color: $secondary
+       

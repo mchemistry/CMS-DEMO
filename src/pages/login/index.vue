@@ -1,0 +1,110 @@
+<template>
+    <div class="auth-page is-flex is-justify-content-center is-align-items-center">
+      <p class="auth-page-title">{{ name }}</p>
+      <ValidationObserver ref="observer" class="login-card">
+        <section class="section">
+          <p
+            slot="title"
+            class="has-text-centered is-size-4 mb-6 text-primary has-text-weight-regular"
+          >
+            Đăng nhập
+          </p>
+
+          <BInputWithValidation
+            v-model="username"
+            rules="required"
+            type="username"
+            label="Tên tài khoản"
+            icon="account"
+            :disabled="loading"
+            rounded
+            placeholder="Nhập vào tên tài khoản ..."
+            class="pb-3"
+          />
+
+          <BInputWithValidation
+            v-model="password"
+            rules="required"
+            type="password"
+            label="Mật khẩu"
+            rounded
+            vid="password"
+            :disabled="loading"
+            icon="lock"
+            placeholder="Nhập vào mật khẩu ..."
+            password-reveal
+          />
+          <div class="handle-base mt-5">
+            <b-button
+              expanded
+              rounded
+              :loading="loading"
+              :disabled="loading"
+              type="is-primary"
+              @click="onLogin"
+              >Đăng nhập</b-button
+            >
+          </div>
+        </section>
+    </ValidationObserver>
+    </div>
+</template>
+
+<script lang='ts'>
+import { Component, Vue, Ref } from 'vue-property-decorator'
+import BInputWithValidation from '@/components/inputs/BInputWithValidation.vue'
+import { BNotificationConfig } from 'buefy/types/components'
+import { VForm } from '@/types/vee-validate.type'
+@Component({
+  name: 'auth',
+  components: {
+    BInputWithValidation
+  }
+})
+
+export default class extends Vue {
+  private name: String = 'FADI CMS'
+  private username: String = ''
+  private password: String = ''
+  private loading:Boolean = false
+
+  @Ref('observer') readonly form!: VForm
+  private async onLogin() {
+    this.loading = true
+    const result = await this.form.validate()
+    // eslint-disable-next-line no-useless-return
+    if (!result) {
+      this.loading = false
+      return
+    }
+    setTimeout(() => {
+      this.$buefy.notification.open({
+        duration: 4500,
+        message: 'Đã đăng xuất hệ thống ,jiji 😎!',
+        type: 'is-success',
+        hasIcon: true,
+        animation: 'slide-left'
+      } as BNotificationConfig)
+      this.loading = false
+      this.$router.push('/')
+    }, 3000)
+  }
+}
+</script>
+
+<style lang="sass">
+.auth-page
+  width: $w-screen
+  height: $h-screen
+  background-color: $base-background-color
+  .auth-page-title
+    font-size: 32px
+    font-weight: 600
+    color: $primary
+    top: 3rem
+    @include center(absolute, x)
+  .login-card
+    @include neu-style
+    .section
+      padding: 1.5rem
+</style>

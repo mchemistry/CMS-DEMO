@@ -1,0 +1,135 @@
+/************************************
+ ******* BASE ELEMENTS RESET ********
+  ***********************************/
+
+*,
+*::before,
+*::after
+  padding: 0
+  margin: 0
+  box-sizing: border-box
+
+*::selection, *::-moz-selection
+  background: rgba($primary, 0.4)
+
+html,
+body
+    font-size: $base-default-font-size
+    overflow: auto !important
+    width: 100%
+    height: 100%
+    color: $base-text-primary-color
+    font-family: "Nunito Sans", sans-serif !important
+    font-weight: 400
+
+//reset scroll trackbar
+*::-webkit-scrollbar 
+  width: 0.5rem
+
+/* 4px scroll thumb. 10px margin from right margin */
+*::-webkit-scrollbar-track 
+  box-shadow: none
+  border: none
+
+*::-webkit-scrollbar-thumb 
+  box-shadow: inset 0 0 0.5rem 0.5rem rgba(#5d3284, 0.5)
+  border: 0.125rem solid transparent
+  border-radius: 0.75rem
+
+*::-webkit-scrollbar-button 
+  display: none
+
+//reset icon
+// span
+//     width: auto
+//     height: auto
+//     overflow: hidden !important
+
+/************************************
+ ******* APEX CHART CLASSES RESET ********
+  ***********************************/
+.apexcharts-tooltip
+  background: rgba(248, 248, 248, 0.952) !important
+  .apexcharts-tooltip-title
+    font-size: 0.75rem !important
+    font-weight: weight(bold) !important
+    color: black !important
+    text-align: center !important
+    font-family: "Nunito Sans", sans-serif !important
+    padding: 0.1875rem !important
+  .apexcharts-tooltip-series-group
+    .apexcharts-tooltip-text
+      .apexcharts-tooltip-y-group
+        padding: 0 0 0.375rem !important
+
+/************************************
+ ******* BULMA CLASSES RESET ********
+  ***********************************/
+.notification 
+  border: $base-border-style
+  border-color: $base-border-color
+  box-shadow: $base-small-neumorphism-shadow
+  min-height: 4.6875rem !important
+  height: auto
+  z-index: 9999
+
+  .button
+    transition: background-color 0.3s
+  .media
+    justify-content: center
+    align-items: center
+
+.is-success
+    background-color: $base-background-color !important
+    color: $success !important
+
+.is-danger
+    background-color: $base-background-color !important
+    color: $danger !important
+
+.is-info
+    background-color: $base-background-color !important
+    color: $info !important
+    
+.is-warning
+    background-color: $base-background-color !important
+    color: $warning !important
+
+.link
+  transition: color 0.3s
+  &:hover
+    color: $secondary
+
+.menu-list
+  li
+    ul
+      @include border-light
+      @include base-border('left')
+    a
+      font-size: $base-default-font-size
+      font-weight: weight(bold)
+      line-height: 1.3
+      color: $base-text-primary-color !important
+      text-overflow: ellipsis !important
+      transition: all 0.3s
+      -moz-transition: all 0.3s
+      &:hover
+        margin: 0 !important
+        padding:0.5rem  0.75rem !important
+        transform: translateX(0.3125rem)
+        -moz-transform: translateX(0.3125rem)
+  .menu-expand
+    > a:hover
+      color: $base-text-primary-color
+      transform: translateX(0) !important
+
+.is-pulled-right
+  right: 0.3125rem !important
+  position: relative
+  transition: transform 0.3s !important
+  &.rotate-90
+    transform: rotate(90deg)
+.menu-list a 
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
