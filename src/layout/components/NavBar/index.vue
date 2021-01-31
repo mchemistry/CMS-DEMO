@@ -8,7 +8,7 @@
       <span class="hamburger-menu"></span>
     </div>
     <div class="navbar__end">
-      <!-- <div
+      <div
         class="notifications mr-6 is-flex is-align-items-center"
         @click.stop="showNoti = !showNoti"
       >
@@ -18,15 +18,14 @@
           class="notifications__counter is-flex is-align-items-center is-justify-content-center"
           >{{ totalNotificationsUnread | totalNotificationsConvert }}</span
         >
-        <notifications class="notifications__card" :show="showNoti" />
-      </div> -->
+        <notification class="notifications__card" :show="showNoti" />
+      </div>
       <full-screen class="mr-6" />
-      <!-- <div
-        v-click-outside="closeNotificationCard"
+      <div
         class="user mr-5 mt-1 is-flex is-align-items-center"
         @click.stop="showUserSetting = !showUserSetting"
       >
-        <avatar :size="32" />
+        <avatar :size="32" :includeCursorPointer="true"/>
         <b-icon
           class="is-pulled-right pb-1 ml-2 user__icon"
           icon="menu-right"
@@ -35,7 +34,6 @@
         <transition name="upper" :duration="{leave: 0}" mode="out-in">
           <div
             v-show="showUserSetting"
-            v-click-outside="closeUserCard"
             class="user__dropdown"
           >
             <p class="user__dropdown__title">@Tandv95</p>
@@ -57,15 +55,15 @@
             </div>
           </div>
         </transition>
-      </div> -->
+      </div>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import FullScreen from '../FullScreen/index.vue'
-// import Notifications from '@/components/notifications/index.vue'
-// import Avatar from '@/components/avatar/index.vue'
+import Notification from '@/components/Notification/index.vue'
+import Avatar from '@/components/Avatar/index.vue'
 import { SideBarStatusType } from '@/enums/appEnum'
 
 import { AppModule } from '@/store/modules/app'
@@ -74,7 +72,14 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component({
   name: 'Navbar',
   components: {
-    FullScreen
+    FullScreen,
+    Notification,
+    Avatar
+  },
+  filters: {
+    totalNotificationsConvert: (value: Number) => {
+      return value > 10 ? '10+' : value
+    }
   }
 })
 
@@ -83,6 +88,13 @@ export default class extends Vue {
     default: 'fixed',
     validator: (val: string) => ['fixed', 'relative', 'static', 'absolute'].includes(val)
   }) private position!: string
+
+  @Prop({
+    default: 11
+  }) private totalNotificationsUnread!: number
+
+  private showNoti = false
+  private showUserSetting = false
 
   get navbarStyle() {
     const widthComplement =
@@ -101,6 +113,14 @@ export default class extends Vue {
     AppModule.commitToggleSideBar()
   }
 
+  private closeNotificationCard() {
+    this.showNoti = false
+  }
+
+  private closeUserCard = () => {
+    this.showUserSetting = false
+  }
+
   beforeMount() {
     window.addEventListener('resize', AppModule.commitSetLayoutSize)
   }
@@ -109,84 +129,6 @@ export default class extends Vue {
     window.removeEventListener('resize', AppModule.commitSetLayoutSize)
   }
 }
-// import {
-//   defineComponent,
-//   computed,
-//   useContext,
-//   ref,
-//   PropType
-// } from '@routerjs/composition-api'
-
-// export default defineComponent({
-//   components: {
-//     FullScreen,
-//     Notifications,
-//     Avatar
-//   },
-//   props: {
-//     position: {
-//       type: String,
-//       require: true,
-//       validator: (val: string) =>
-//         ['fixed', 'absolute', 'static', 'relative'].includes(val),
-//       default: 'fixed'
-//     },
-//     sidebarStatus: {
-//       type: String as PropType<SideBarStatusType>,
-//       default: SideBarStatusType.HIDDEN
-//     },
-//     totalNotificationsUnread: {
-//       type: Number,
-//       default: 11
-//     }
-//   },
-//   setup(props) {
-//     const showNoti = ref(false)
-//     const showUserSetting = ref(false)
-//     // Declare Vuex Module
-//     const AppModule = getModule(App, useContext().store)
-//     const toggleMenu = () => AppModule.commitToggleSideBar()
-//     const setLayoutSize = () => AppModule.commitSetLayoutSize()
-//     const closeNotificationCard = () => {
-//       showNoti.value = false
-//     }
-//     const closeUserCard = () => {
-//       showUserSetting.value = false
-//     }
-//     const navBarStyle = computed(() => {
-//       const widthComplement =
-//         props.sidebarStatus === SideBarStatusType.HIDDEN
-//           ? 0
-//           : props.sidebarStatus === SideBarStatusType.EXPANDED
-//             ? 80
-//             : 200
-//       return {
-//         width: `calc(100% - ${widthComplement}px)`,
-//         position: props.position
-//       } as HTMLElement['style']
-//     })
-//     return {
-//       navBarStyle,
-//       toggleMenu,
-//       showNoti,
-//       showUserSetting,
-//       closeNotificationCard,
-//       setLayoutSize,
-//       closeUserCard
-//     }
-//   },
-//   filters: {
-//     totalNotificationsConvert: (value: Number) => {
-//       return value > 10 ? '10+' : value
-//     }
-//   },
-//   created() {
-//     window.addEventListener('resize', this.setLayoutSize)
-//   },
-//   destroyed() {
-//     window.removeEventListener('resize', this.setLayoutSize)
-//   }
-// })
 </script>
 
 <style lang="sass" scoped>

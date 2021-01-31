@@ -52,7 +52,7 @@
 
 <script lang='ts'>
 import { Component, Vue, Ref } from 'vue-property-decorator'
-import BInputWithValidation from '@/components/inputs/BInputWithValidation.vue'
+import { BInputWithValidation } from '@/components/Inputs'
 import { BNotificationConfig } from 'buefy/types/components'
 import { VForm } from '@/types/vee-validate.type'
 @Component({
