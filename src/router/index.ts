@@ -1,5 +1,6 @@
 import VueRouter, { RouteConfig } from 'vue-router'
 import Vue from 'vue'
+import Layout from '@/layout/index.vue'
 
 Vue.use(VueRouter)
 
@@ -10,7 +11,7 @@ export const constantRoutes: RouteConfig[] = [
   },
   {
     path: '/',
-    component: () => import(/* webpackChunkName: "login" */ '@/layout/index.vue')
+    component: Layout
   }
 ]
 

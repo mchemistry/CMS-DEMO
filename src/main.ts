@@ -1,7 +1,8 @@
-import Vue from 'vue'
+import Vue, { DirectiveOptions } from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
+import * as directives from '@/directives'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 import { required, confirmed, length, email } from 'vee-validate/dist/rules'
 // Buefy module
@@ -60,6 +61,14 @@ extend('username', {
   },
   message: 'Tên tài khoản không phù hợp'
 })
+
+/**
+ * Define global directives
+ */
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, (directives as { [ key: string ]: DirectiveOptions })[key])
+})
+
 // render
 new Vue({
   router,

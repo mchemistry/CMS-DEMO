@@ -18,7 +18,7 @@
           class="notifications__counter is-flex is-align-items-center is-justify-content-center"
           >{{ totalNotificationsUnread | totalNotificationsConvert }}</span
         >
-        <notification class="notifications__card" :show="showNoti" />
+        <notification class="notifications__card" :show="showNoti" v-click-outside="closeNotificationCard" />
       </div>
       <full-screen class="mr-6" />
       <div
@@ -32,7 +32,9 @@
           :class="showUserSetting && `rotate-90`"
         ></b-icon>
         <transition name="upper" :duration="{leave: 0}" mode="out-in">
+          <!-- User card dropdown -->
           <div
+            v-click-outside="closeUserCard"
             v-show="showUserSetting"
             class="user__dropdown"
           >
@@ -117,7 +119,7 @@ export default class extends Vue {
     this.showNoti = false
   }
 
-  private closeUserCard = () => {
+  private closeUserCard() {
     this.showUserSetting = false
   }
 
