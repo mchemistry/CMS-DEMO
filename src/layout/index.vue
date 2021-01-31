@@ -8,6 +8,7 @@
           <router-view class="z1" />
         </transition>
       </main>
+      <roll-call></roll-call>
     </div>
   </div>
 </template>
@@ -15,14 +16,15 @@
 <script lang="ts">
 import { AppModule } from '@/store/modules/app'
 import { SideBarStatusType } from '@/enums/appEnum'
-import { sideBar, navBar } from './components'
+import { sideBar, navBar, rollCall } from './components'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
   name: 'default-layout',
   components: {
     sideBar,
-    navBar
+    navBar,
+    rollCall
   }
 })
 

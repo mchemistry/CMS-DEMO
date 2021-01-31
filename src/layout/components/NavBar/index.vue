@@ -135,7 +135,7 @@ export default class extends Vue {
 .navbar
   width: $w-full
   z-index: 1
-  height: 3.75rem
+  height: 2.5rem
   right: 0
   transition: width $base-animation-timer-default
   justify-content: space-between
