@@ -1,15 +1,17 @@
 <template>
   <transition name="upper" :duration="{leave: 0}" mode="out-in">
-    <div v-if="show" class="notifications__card">
+    <div class="notifications__card" v-show="show">
       <div
-        class="notifications__card-title is-flex is-justify-content-space-between pb-2"
+        class="notifications__card-title is-flex is-justify-content-space-between pb-2 is-align-items-center"
       >
         <p class="pl-1">Thông báo</p>
-        <router-link
-          to="/"
-          class="is-size-7 link mt-1 mr-1 has-text-weight-regular pr-1"
-          >Đánh dấu tất cả đã đọc >></router-link
-        >
+        <a
+          v-if="totalMessageUnread && !markAllAsReadLoading"
+          class="is-size-7 link mt-1 mr-1 has-text-weight-semibold pr-1"
+          @click.stop="onMarkAllMessageAsRead"
+          >Đánh dấu tất cả đã đọc >>
+        </a>
+        <thee-dot-loading v-if="markAllAsReadLoading" class="mr-4"/>
       </div>
       <div
         v-if="loading"
@@ -23,15 +25,15 @@
           <notification-item
             v-for="n in 10"
             :key="n"
-            :un-read="n % 2 !== 0"
-            :important-level="n % 3"
+            :un-read="totalMessageUnread > 0 && n % 2 !== 0"
+            :isimportantMessage="n % 2 !== 0"
           ></notification-item>
         </div>
       </keep-alive>
       <router-link
         v-if="!loading"
         to="/notifications"
-        class="is-size-7 link is-flex is-justify-content-center pb-1 pt-2 has-text-weight-regurlar notifications__card-link"
+        class="is-size-7 link is-flex is-justify-content-center pb-1 pt-2 has-text-weight-semibold notifications__card-link"
         >Xem tất cả >></router-link
       >
     </div>
@@ -40,12 +42,14 @@
 
 <script lang="ts">
 import NotificationItem from './NotificationItem.vue'
+import { theeDotLoading } from '../Loading'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
   name: 'notification',
   components: {
-    NotificationItem
+    NotificationItem,
+    theeDotLoading
   }
 })
 
@@ -53,6 +57,17 @@ export default class extends Vue {
   @Prop({}) private show?: boolean
 
   private loading = false
+  private markAllAsReadLoading = false
+  // private totalMessageUnread?: number
+  private totalMessageUnread = 10
+
+  private onMarkAllMessageAsRead() {
+    this.markAllAsReadLoading = true
+    setTimeout(() => {
+      this.markAllAsReadLoading = false
+      this.totalMessageUnread = 0
+    }, 3000)
+  }
 
   mouted() {
     if (this.show) {
@@ -70,7 +85,7 @@ export default class extends Vue {
     position: absolute
     cursor: default
     min-height: 100px
-    width: 300px
+    width: 320px
     height: auto
     padding: 0.5rem 0
     transition: transform $base-animation-timer-default
@@ -78,7 +93,7 @@ export default class extends Vue {
     @include neu-style
     &-title
         font-size: $base-default-font-size
-        font-weight: bold
+        font-weight: 600
         color: $secondary
         line-height: 1.3
     &__list-show

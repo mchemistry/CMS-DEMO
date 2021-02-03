@@ -10,14 +10,15 @@
     <div class="navbar__end">
       <div
         class="notifications mr-6 is-flex is-align-items-center"
-        @click.stop="showNoti = !showNoti"
       >
-        <b-icon icon="bell" class="notifications__icon" />
-        <span
-          v-if="totalNotificationsUnread"
-          class="notifications__counter is-flex is-align-items-center is-justify-content-center"
-          >{{ totalNotificationsUnread | totalNotificationsConvert }}</span
-        >
+        <div @click.stop="showNoti = !showNoti" class="notifications__handler is-flex is-align-items-center">
+          <b-icon icon="bell" class="notifications__handler-icon"/>
+          <span
+            v-if="totalNotificationsUnread"
+            class="notifications__handler-counter is-flex is-align-items-center is-justify-content-center"
+            >{{ totalNotificationsUnread | totalNotificationsConvert }}</span
+          >
+        </div>
         <notification class="notifications__card" :show="showNoti" v-click-outside="closeNotificationCard" />
       </div>
       <full-screen class="mr-6" />
@@ -184,25 +185,26 @@ export default class extends Vue {
     .notifications
       float: right
       right: 4rem
-      cursor: pointer
-      &__icon
-        color: $secondary
-        transition: color $base-animation-timer-default
-        &:active
-          color: rgba($secondary, 0.3)
-      &__counter
-        position: relative
-        font-size: 9px
-        font-weight: 500
-        top: -1.2em
-        left: -1.2em
-        height: 22px
-        width: 22px
-        background-color:  $primary
-        color: $base-background-color
-        padding: 0.2em
-        border: 0.2em solid $base-background-color
-        border-radius: 50%
+      &__handler
+        cursor: pointer
+        &-icon
+          color: $secondary
+          transition: color $base-animation-timer-default
+          &:active
+            color: rgba($secondary, 0.3)
+        &-counter
+          position: relative
+          font-size: 9px
+          font-weight: 500
+          top: -1.2em
+          left: -1.2em
+          height: 22px
+          width: 22px
+          background-color:  $primary
+          color: $base-background-color
+          padding: 0.2em
+          border: 0.2em solid $base-background-color
+          border-radius: 50%
       &__card
         right: 8rem
     .user

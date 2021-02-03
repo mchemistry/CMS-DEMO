@@ -1,6 +1,6 @@
 /************************************
  ******* BASE ELEMENTS RESET ********
-  ***********************************/
+ ***********************************/
 
 *,
 *::before,
@@ -14,30 +14,27 @@
 
 html,
 body
-    font-size: $base-default-font-size
-    overflow: auto !important
-    width: 100%
-    height: 100%
-    color: $base-text-primary-color
-    font-family: "Nunito Sans", sans-serif !important
-    font-weight: 400
+  font-size: $base-default-font-size
+  overflow: auto !important
+  width: 100%
+  height: 100%
+  color: $base-text-primary-color
+  font-family: "Nunito Sans", sans-serif !important
+  font-weight: 400
 
 //reset scroll trackbar
-*::-webkit-scrollbar 
+*::-webkit-scrollbar
   width: 0.5rem
 
 /* 4px scroll thumb. 10px margin from right margin */
-*::-webkit-scrollbar-track 
+*::-webkit-scrollbar-track
   box-shadow: none
   border: none
 
-*::-webkit-scrollbar-thumb 
+*::-webkit-scrollbar-thumb
   box-shadow: inset 0 0 0.5rem 0.5rem rgba(#5d3284, 0.5)
   border: 0.125rem solid transparent
   border-radius: 0.75rem
-
-*::-webkit-scrollbar-button 
-  display: none
 
 //reset icon
 // span
@@ -47,7 +44,7 @@ body
 
 /************************************
  ******* APEX CHART CLASSES RESET ********
-  ***********************************/
+ ***********************************/
 .apexcharts-tooltip
   background: rgba(248, 248, 248, 0.952) !important
   .apexcharts-tooltip-title
@@ -64,8 +61,11 @@ body
 
 /************************************
  ******* BULMA CLASSES RESET ********
-  ***********************************/
-.notification 
+ ***********************************/
+.notices
+  &.is-top
+    padding: 4rem 2rem
+.notification
   border: $base-border-style
   border-color: $base-border-color
   box-shadow: $base-small-neumorphism-shadow
@@ -80,20 +80,20 @@ body
     align-items: center
 
 .is-success
-    background-color: $base-background-color !important
-    color: $success !important
+  background-color: $base-background-color !important
+  color: $success !important
 
 .is-danger
-    background-color: $base-background-color !important
-    color: $danger !important
+  background-color: $base-background-color !important
+  color: $danger !important
 
 .is-info
-    background-color: $base-background-color !important
-    color: $info !important
-    
+  background-color: $base-background-color !important
+  color: $info !important
+
 .is-warning
-    background-color: $base-background-color !important
-    color: $warning !important
+  background-color: $base-background-color !important
+  color: $warning !important
 
 .link
   transition: color 0.3s
@@ -115,7 +115,7 @@ body
       -moz-transition: all 0.3s
       &:hover
         margin: 0 !important
-        padding:0.5rem  0.75rem !important
+        padding: 0.5rem 0.75rem !important
         transform: translateX(0.3125rem)
         -moz-transform: translateX(0.3125rem)
   .menu-expand
@@ -129,7 +129,7 @@ body
   transition: transform 0.3s !important
   &.rotate-90
     transform: rotate(90deg)
-.menu-list a 
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
+.menu-list a
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis

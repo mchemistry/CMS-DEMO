@@ -1,7 +1,7 @@
 <template>
   <div
     class="notification-item is-flex"
-    :class="!unRead && 'unread'"
+    :class="unRead && 'unread'"
     :style="itemStyleInPage"
   >
     <div
@@ -15,7 +15,10 @@
       <div class="notification-item__content__username pl-1">
         <p :style="textContentStyleInPage">
           <span style="color: #5d3284; font-weight: 600">@{{ userName }}</span>
-          &nbsp;&#8211;&nbsp;{{ isPage ? message : convertMessage }}
+          &nbsp;&#8211;&nbsp;
+          <span v-if="isimportantMessage" class="important-message">Quan trọng</span>
+          {{isimportantMessage ? '&nbsp;&#8211;&nbsp;' : ''}}
+          {{ isPage ? message : convertMessage }}
         </p>
       </div>
       <div
@@ -26,13 +29,6 @@
         <p>27 septembre 2019 at 23:14</p>
       </div>
     </div>
-    <b-icon
-      v-if="importantLevel >= 1"
-      class="icon--impact-avatar ml-1"
-      icon="star"
-      :size="!isPage ? 'is-small' : ''"
-      :style="{color: importantLevel === 1 ? '#FA7D08' : '#AA1E2C'}"
-    ></b-icon>
   </div>
 </template>
 
@@ -50,7 +46,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class extends Vue {
   @Prop() private isPage?: boolean
   @Prop() private unRead?: boolean
-  @Prop({ default: 0 }) private importantLevel!: Number
+  @Prop() private isimportantMessage!: boolean
   @Prop({ default: 'Username' }) private userName!: string
   @Prop({
     default:
@@ -78,13 +74,13 @@ export default class extends Vue {
   get textContentStyleInPage() {
     return {
       fontSize: this.isPage ? '14px' : '12px',
-      fontWeight: this.unRead ? '500 !important' : '700 !important'
+      fontWeight: this.unRead ? '700 !important' : '500 !important'
     } as HTMLElement['style']
   }
 
   get convertMessage() {
-    return this.message.length > 65
-      ? `${this.message.slice(0, 65)} ....`
+    return this.message.length > 72
+      ? (this.isimportantMessage ? `${this.message.slice(0, 65)} ....` : `${this.message.slice(0, 72)} ....`)
       : this.message
   }
 }
@@ -118,6 +114,15 @@ export default class extends Vue {
             text-overflow: ellipsis
             height: 40px
             overflow: hidden
+            .important-message
+              background-color: $danger
+              border-radius: 12px
+              width: 24px
+              height: 16px
+              font-size: 10px
+              padding: 0.1rem 0.3rem
+              color: $white
+              font-weight: 500 !important
         &__date
             height: 15px
             position: relative

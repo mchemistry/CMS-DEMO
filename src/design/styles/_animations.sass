@@ -1,5 +1,5 @@
 // zoom
-.zoom-enter-active, .zoom-leave-active 
+.zoom-enter-active, .zoom-leave-active
   transition: transform .4s
 
 .zoom-enter, .zoom-leave-to
@@ -15,15 +15,14 @@
   transform: scale(1.5)
 
 // slide left
-.slide-left-enter-active, .slide-left-leave-active 
+.slide-left-enter-active, .slide-left-leave-active
   transition: transform .3s
 
 .slide-left-enter, .slide-left-leave-to
   transform: translateX(6.25rem)
 
-
 // slide right
-.slide-right-enter-active, .slide-right-leave-active 
+.slide-right-enter-active, .slide-right-leave-active
   transition: transform 0.3s
 
 .slide-right-enter, .slide-right-leave-to
@@ -35,19 +34,19 @@
 
 .upper-enter
   transform: translateY(1.2rem)
-  
+
 // fade
-.fader-enter-active, .fader-leave-active 
+.fader-enter-active, .fader-leave-active
   transition: opacity 0.5s ease
 
 .fader-enter, .fader-leave-to
   opacity: 0
 
 // rollcall
-.rollcall-enter-active, .rollcall-leave-active 
+.rollcall-enter-active, .rollcall-leave-active
   transition: transform 0.5s
 
-.rollcall-leave-active 
+.rollcall-leave-active
   transition-delay: 0.6s !important
 
 .rollcall-enter, .rollcall-leave-to
@@ -61,14 +60,30 @@
 .y-enter
   height: 0 !important
 
-
 .spin
   animation: spin 1100ms infinite linear
 
-@keyframes spin 
-    from
-      transform: rotate(0deg)
-    to 
-      transform: rotate(360deg)
+/************************************
+ ***********BASE KEYFRAMES*********
+ **********************************/
+// spin
+@keyframes spin
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)
 
-    
+// bouncedelay 
+@-webkit-keyframes bouncedelay
+  0%, 80%, 100%  
+  -webkit-transform: scale(0)
+  40% 
+  -webkit-transform: scale(1.0)
+
+@keyframes bouncedelay
+  0%, 80%, 100%
+    -webkit-transform: scale(0)
+    transform: scale(0)
+  40%
+    -webkit-transform: scale(1.0)
+    transform: scale(1.0)

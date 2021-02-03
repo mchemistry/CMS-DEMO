@@ -79,7 +79,7 @@ export default class extends Vue {
     }
     setTimeout(() => {
       this.$buefy.notification.open({
-        duration: 4500,
+        duration: 45000,
         message: 'Đăng nhập thành công~ 😎!',
         type: 'is-success',
         hasIcon: true,
