@@ -11,7 +11,13 @@ export const constantRoutes: RouteConfig[] = [
   },
   {
     path: '/',
-    component: Layout
+    component: Layout,
+    children: [
+      {
+        path: '/notifications',
+        component: () => import(/* webpackChunkName: "notifications" */ '@/pages/notifications/index.vue')
+      }
+    ]
   }
 ]
 

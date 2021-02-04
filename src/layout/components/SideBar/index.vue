@@ -16,7 +16,7 @@
         ></b-menu-item>
         <b-menu-item icon="cog" :active="isActive" expanded class="menu-expand">
           <template #label="props">
-            {{ sidebarStatus === 'opened' ? 'My Account' : '' }}
+            {{ sidebarStatus === "opened" ? "My Account" : "" }}
             <b-icon
               class="is-pulled-right pb-1"
               icon="menu-right"
@@ -44,7 +44,7 @@
         </b-menu-item>
         <b-menu-item icon="cog" class="menu-expand">
           <template #label="props">
-            {{ sidebarStatus === 'opened' ? 'My Account' : '' }}
+            {{ sidebarStatus === "opened" ? "My Account" : "" }}
             <b-icon
               class="is-pulled-right pb-1"
               icon="menu-right"
@@ -97,20 +97,21 @@ import { BNotificationConfig } from 'buefy/types/components'
 @Component({
   name: 'Sidebar'
 })
-
 export default class extends Vue {
   @Prop({
-    default: 'relative',
-    validator: (val: string) => ['fixed', 'relative', 'static', 'absolute'].includes(val)
-  }) private position!: string
+    default: 'fixed',
+    validator: (val: string) =>
+      ['fixed', 'relative', 'static', 'absolute'].includes(val)
+  })
+  private position!: string;
 
-  @Prop({ default: 200 }) private width!: string | number
-  @Prop({ default: 0 }) private height!: string | number
-  @Prop({ default: null }) private fullWidth!: boolean
-  @Prop({ default: true }) private fullHeight!: string | number
+  @Prop({ default: 200 }) private width!: string | number;
+  @Prop({ default: 0 }) private height!: string | number;
+  @Prop({ default: null }) private fullWidth!: boolean;
+  @Prop({ default: true }) private fullHeight!: string | number;
 
-  private loading = false
-  private isActive = true
+  private loading = false;
+  private isActive = true;
 
   get sidebarStatus() {
     return AppModule.sidebarStatus
@@ -119,28 +120,28 @@ export default class extends Vue {
   get sidebarStyle() {
     const style = {} as HTMLElement['style']
     style.width = style['min-width' as any] =
-        this.sidebarStatus === SideBarStatusType.EXPANDED
-          ? '5rem !important'
-          : this.sidebarStatus === 'hidden'
-            ? '0rem !important'
-            : this.fullWidth
-              ? '100vw !important'
-              : `${this.width}px !important`
+      this.sidebarStatus === SideBarStatusType.EXPANDED
+        ? '5rem !important'
+        : this.sidebarStatus === 'hidden'
+          ? '0rem !important'
+          : this.fullWidth
+            ? '100vw !important'
+            : `${this.width}px !important`
     style.height = this.fullHeight
       ? '100% !important'
       : `${this.height}px !important`
     style.position = this.position
     style.visibility =
-        this.sidebarStatus === SideBarStatusType.HIDDEN ? 'hidden' : 'visible'
+      this.sidebarStatus === SideBarStatusType.HIDDEN ? 'hidden' : 'visible'
     return style
   }
 
   get logoStyleWhenSideBarExpanded() {
     const style = {} as HTMLElement['style']
     style.width =
-        this.sidebarStatus === SideBarStatusType.EXPANDED
-          ? '4.75rem !important'
-          : '6.75rem !important'
+      this.sidebarStatus === SideBarStatusType.EXPANDED
+        ? '4.75rem !important'
+        : '6.75rem !important'
     return style
   }
 

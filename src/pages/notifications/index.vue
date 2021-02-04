@@ -5,7 +5,7 @@
       :key="n"
       :un-read="n % 2 !== 0"
       :is-page="true"
-      :important-level="n % 3"
+      :isimportantMessage="n % 2 !== 0"
     ></notification-item>
   </div>
 </template>
@@ -20,7 +20,6 @@ import { Component, Vue } from 'vue-property-decorator'
     NotificationItem
   }
 })
-
 export default class extends Vue {}
 </script>
 
