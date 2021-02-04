@@ -26,7 +26,7 @@
             v-for="n in 10"
             :key="n"
             :un-read="totalMessageUnread > 0 && n % 2 !== 0"
-            :isimportantMessage="n % 2 !== 0"
+            :is-important-message="n % 2 !== 0"
           ></notification-item>
         </div>
       </keep-alive>
@@ -82,28 +82,28 @@ export default class extends Vue {
 
 <style lang="sass" scoped>
 .notifications__card
-    position: absolute
-    cursor: default
-    min-height: 100px
-    width: 320px
-    height: auto
-    padding: 0.5rem 0
-    transition: transform $base-animation-timer-default
-    top: 4.5rem
-    @include neu-style
+  position: absolute
+  cursor: default
+  min-height: 100px
+  width: 320px
+  height: auto
+  padding: 0.5rem 0
+  transition: transform $base-animation-timer-default
+  top: 4.5rem
+  @include neu-style
     &-title
-        font-size: $base-default-font-size
-        font-weight: 600
-        color: $secondary
-        line-height: 1.3
+      font-size: $base-default-font-size
+      font-weight: 600
+      color: $secondary
+      line-height: 1.3
     &__list-show
-        max-height: 250px
-        overflow: auto
+      max-height: 250px
+      overflow: auto
         // box-shadow: $base-small-neumorphism-inset-shadow
-        @include border-light
+      @include border-light
         @include base-border(top, bottom)
     &__list-sync
-        color: $secondary
-        @include border-light
+      color: $secondary
+      @include border-light
         @include base-border(top, bottom)
 </style>

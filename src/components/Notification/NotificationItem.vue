@@ -16,10 +16,10 @@
         <p :style="textContentStyleInPage">
           <span style="color: #5d3284; font-weight: 600">@{{ userName }}</span>
           &nbsp;&#8211;&nbsp;
-          <span v-if="isimportantMessage" class="important-message"
+          <span v-if="isImportantMessage" class="important-message"
             >Quan trọng</span
           >
-          {{ isimportantMessage ? "&nbsp;&#8211;&nbsp;" : "" }}
+          {{ isImportantMessage ? '&nbsp;&#8211;&nbsp;' : '' }}
           {{ isPage ? message : convertMessage }}
         </p>
       </div>
@@ -47,7 +47,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class extends Vue {
   @Prop() private isPage?: boolean;
   @Prop() private unRead?: boolean;
-  @Prop() private isimportantMessage!: boolean;
+  @Prop() private isImportantMessage?: boolean;
   @Prop({ default: 'Username' }) private userName!: string;
   @Prop({
     default: 'https://i.ibb.co/mDhwrnP/icon-facebook-ong-110448635.png'
@@ -90,7 +90,7 @@ export default class extends Vue {
 
   get convertMessage() {
     return this.message.length > 72
-      ? this.isimportantMessage
+      ? this.isImportantMessage
         ? `${this.message.slice(0, 65)} ....`
         : `${this.message.slice(0, 72)} ....`
       : this.message

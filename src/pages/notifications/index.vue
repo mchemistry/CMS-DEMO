@@ -5,7 +5,7 @@
       :key="n"
       :un-read="n % 2 !== 0"
       :is-page="true"
-      :isimportantMessage="n % 2 !== 0"
+      :is-important-message="n % 2 !== 0"
     ></notification-item>
   </div>
 </template>

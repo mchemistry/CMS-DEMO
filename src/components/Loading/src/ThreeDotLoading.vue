@@ -1,9 +1,18 @@
 <template>
   <div class="threed-dot-loading">
-  <div class="threed-dot-loading--bounce1" :style="threeDotLoadingStyle"></div>
-  <div class="threed-dot-loading--bounce2" :style="threeDotLoadingStyle"></div>
-  <div class="threed-dot-loading--bounce3" :style="threeDotLoadingStyle"></div>
-</div>
+    <div
+      class="threed-dot-loading--bounce1"
+      :style="threeDotLoadingStyle"
+    ></div>
+    <div
+      class="threed-dot-loading--bounce2"
+      :style="threeDotLoadingStyle"
+    ></div>
+    <div
+      class="threed-dot-loading--bounce3"
+      :style="threeDotLoadingStyle"
+    ></div>
+  </div>
 </template>
 
 <script lang='ts'>
@@ -12,15 +21,17 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Component({
   name: 'threeDotLoading'
 })
-
 export default class extends Vue {
-  @Prop() private size?: number
+  @Prop() private size?: number;
 
   get threeDotLoadingStyle() {
-    return this.size && {
-      width: `${this.size}px !important`,
-      height: `${this.size}px !important`
-    } as HTMLElement['style']
+    return (
+      this.size &&
+      ({
+        width: `${this.size}px !important`,
+        height: `${this.size}px !important`
+      } as HTMLElement['style'])
+    )
   }
 }
 </script>
