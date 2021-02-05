@@ -56,7 +56,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class extends Vue {
   @Prop({}) private show?: boolean
 
-  private loading = false
+  private loading = true
   private markAllAsReadLoading = false
   // private totalMessageUnread?: number
   private totalMessageUnread = 10
@@ -67,15 +67,6 @@ export default class extends Vue {
       this.markAllAsReadLoading = false
       this.totalMessageUnread = 0
     }, 3000)
-  }
-
-  mouted() {
-    if (this.show) {
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-      }, 3000)
-    }
   }
 }
 </script>
@@ -91,19 +82,19 @@ export default class extends Vue {
   transition: transform $base-animation-timer-default
   top: 4.5rem
   @include neu-style
-    &-title
-      font-size: $base-default-font-size
-      font-weight: 600
-      color: $secondary
-      line-height: 1.3
-    &__list-show
-      max-height: 250px
-      overflow: auto
-        // box-shadow: $base-small-neumorphism-inset-shadow
-      @include border-light
-        @include base-border(top, bottom)
-    &__list-sync
-      color: $secondary
-      @include border-light
-        @include base-border(top, bottom)
+  &-title
+    font-size: $base-default-font-size
+    font-weight: 600
+    color: $secondary
+    line-height: 1.3
+  &__list-show
+    max-height: 250px
+    overflow: auto
+      // box-shadow: $base-small-neumorphism-inset-shadow
+    @include border-light
+    @include base-border(top, bottom)
+  &__list-sync
+    color: $secondary
+    @include border-light
+    @include base-border(top, bottom)
 </style>

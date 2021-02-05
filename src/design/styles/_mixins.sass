@@ -1,110 +1,105 @@
 = flexCenter($direction)
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: $direction
-
-= theme($light-theme: true)
-    @if $light-theme 
-        background: lighten($primary-color, 100%)
-        color: red
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: $direction
 
 = full-viewport
-    height: 100vh
-    width: 100vw
+  height: 100vh
+  width: 100vw
 
 = primary
-    .primary
-        color: $primary !important
+  .primary
+    color: $primary !important
 
 = primary-bg
-    .primary-bg
-        background-color: $primary
+  .primary-bg
+    background-color: $primary
 
 = link
-    color: $primary !important
-    cursor: pointer
-    font-size: 16px !important
-    font-weight: 500
-    text-decoration: underline
-    transition: color 0.3s
-    &:hover
-        color: $secondary !important
+  color: $primary !important
+  cursor: pointer
+  font-size: 16px !important
+  font-weight: 500
+  text-decoration: underline
+  transition: color 0.3s
+  &:hover
+    color: $secondary !important
 
 = center($position, $direction)
-    position: $position
-    @if $direction == "y" //vertical
-        top: 50%
-        transform: translateY(-50%)
-    @else if $direction == "x" //horizontal
-        left: 50%
-        transform: translateX(-50%)
-    @else
-        top: 50%
-        left: 50%
-        transform: translate(-50%,-50%)
+  position: $position
+  @if $direction == "y" //vertical
+    top: 50%
+    transform: translateY(-50%)
+  @else if $direction == "x" //horizontal
+    left: 50%
+    transform: translateX(-50%)
+  @else
+    top: 50%
+    left: 50%
+    transform: translate(-50%,-50%)
 
 =  border-light
-    border: $base-border-style !important
+  border: $base-border-style !important
 
 =  base-border($positions...)
-    @if length($positions) == 0 //if border position is not exist set border color to base-border-corlor
-        border-color: $base-border-color !important
-    @else 
-        @each $position in $positions
-            border-#{$position}-color: $base-border-color !important
-
-= neu-style
-    border: $base-border-style !important
+  @if length($positions) == 0 //if border position is not exist set border color to base-border-corlor
     border-color: $base-border-color !important
-    box-shadow: $base-small-neumorphism-shadow
-    border-radius: $base-sm-border-radius
-    background-color: $base-background-color
-    
+  @else
+    @each $position in $positions
+      border-#{$position}-color: $base-border-color !important
+
+//neumorphism style
+= neu-style
+  border: $base-border-style !important
+  border-color: $base-border-color !important
+  box-shadow: $base-small-neumorphism-shadow
+  border-radius: $base-sm-border-radius
+  background-color: $base-background-color
+
 = transition($property)
-    transition: $property
-    
+  transition: $property
+
 = items-center
-    display: flex
-    justify-content: center
-    align-items: center
+  display: flex
+  justify-content: center
+  align-items: center
 
 /************************************
  ******* MIXIN SCREEN ********
-  ***********************************/
+ ***********************************/
 
 //mixin with screen max width
 = responsiveMax($breakPoint)
-    @if $breakPoint == XS
-        @media screen and (max-width: $XS) 
-            @content
-    @else if $breakPoint == SM
-        @media screen and (max-width: $SM) 
-            @content
-    @else if $breakPoint == MD
-        @media screen and (max-width: $MD) 
-            @content
-    @else if $breakPoint == XL
-        @media screen and (max-width: $XL) 
-            @content
-    @else if $breakPoint == XXL
-        @media screen and (max-width: $XXL) 
-            @content
+  @if $breakPoint == XS
+    @media screen and (max-width: $XS)
+      @content
+  @else if $breakPoint == SM
+    @media screen and (max-width: $SM)
+      @content
+  @else if $breakPoint == MD
+    @media screen and (max-width: $MD)
+      @content
+  @else if $breakPoint == XL
+    @media screen and (max-width: $XL)
+      @content
+  @else if $breakPoint == XXL
+    @media screen and (max-width: $XXL)
+      @content
 //mixin with screen min width
 = responsiveMin($breakPoint)
-    @if $breakPoint == XS
-        @media screen and (min-width: $XS) 
-            @content
-    @else if $breakPoint == SM
-        @media screen and (min-width: $SM) 
-            @content
-    @else if $breakPoint == MD
-        @media screen and (min-width: $MD) 
-            @content
-    @else if $breakPoint == XL
-        @media screen and (min-width: $XL) 
-            @content
-    @else if $breakPoint == XXL
-        @media screen and (min-width: $XXL) 
-            @content
-
+  @if $breakPoint == XS
+    @media screen and (min-width: $XS)
+      @content
+  @else if $breakPoint == SM
+    @media screen and (min-width: $SM)
+      @content
+  @else if $breakPoint == MD
+    @media screen and (min-width: $MD)
+      @content
+  @else if $breakPoint == XL
+    @media screen and (min-width: $XL)
+      @content
+  @else if $breakPoint == XXL
+    @media screen and (min-width: $XXL)
+      @content

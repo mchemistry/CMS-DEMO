@@ -149,12 +149,10 @@ export default class extends Vue {
     this.loading = true
     setTimeout(() => {
       this.$router.push('/login')
-      this.$buefy.notification.open({
-        duration: 4500,
+      this.$buefy.toast.open({
+        duration: 2500,
         message: 'Đã đăng xuất hệ thống 😎!',
-        type: 'is-success',
-        hasIcon: true,
-        animation: 'slide-left'
+        type: 'is-success'
       } as BNotificationConfig)
       this.loading = false
     }, 3000)

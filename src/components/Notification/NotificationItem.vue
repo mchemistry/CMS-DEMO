@@ -1,34 +1,34 @@
 <template>
   <div
     class="notification-item is-flex"
-    :class="unRead && 'unread'"
+    :class="notificationItem.unRead && 'unread'"
     :style="itemStyleInPage"
   >
     <div
       class="notification-item__avatar is-flex is-justify-content-center is-align-items-center"
     >
-      <avatar :size="42" :src-img="userThumbnailSrc" />
+      <avatar :size="42" :src-img="notificationItem.userThumbnailSrc" :is-rounded="true"/>
     </div>
     <div
       class="notification-item__content is-flex is-flex-direction-column is-justify-content-space-evenly"
     >
-      <div class="notification-item__content__username pl-1 pt-1">
+      <div class="notification-item__content__username p-1 ">
         <p :style="textContentStyleInPage">
-          <span style="color: #5d3284; font-weight: 600">@{{ userName }}</span>
+          <span style="color: #5d3284; font-weight: 600">@{{ notificationItem.username }}</span>
           &nbsp;&#8211;&nbsp;
-          <span v-if="isImportantMessage" class="important-message"
+          <span v-if="notificationItem.isImportant" class="important-message"
             >Quan trọng</span
           >
-          {{ isImportantMessage ? '&nbsp;&#8211;&nbsp;' : '' }}
-          {{ isPage ? message : convertMessage }}
+          {{ notificationItem.isImportant ? '&nbsp;&#8211;&nbsp;' : '' }}
+          {{ isPage ? notificationItem.message : convertMessage }}
         </p>
       </div>
       <div
-        class="notification-item__content__date is-flex is-align-items-center"
+        class="notification-item__content__date is-flex is-align-items-center pb-1"
         style="z-index: 0 !important"
       >
         <b-icon icon="clock" size="is-small"></b-icon>
-        <p>27 septembre 2019 at 23:14</p>
+        <p>{{ notificationItem.createdAt}}</p>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
 <script lang="ts">
 import Avatar from '../Avatar/index.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
+import { NotificationItemType } from '@/types/config'
 @Component({
   name: 'NotificationItem',
   components: {
@@ -45,35 +45,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
   }
 })
 export default class extends Vue {
-  @Prop() private isPage?: boolean;
-  @Prop() private unRead?: boolean;
-  @Prop() private isImportantMessage?: boolean;
-  @Prop({ default: 'Username' }) private userName!: string;
-  @Prop({
-    default: 'https://i.ibb.co/mDhwrnP/icon-facebook-ong-110448635.png'
-  })
-  private userThumbnailSrc!: boolean;
-
-  @Prop({
-    default: `Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Non quae culpa eveniet,
-          doloremque beatae perferendis esse quia quo, exercitationem saepe
-          fsknfjsbfhjs nfzjnfsjnbfsjn45u23895jsfndjio nfsjknfjosnfojksnfkjonskof
-          sjbnfhjsbfhjsbfjisbfvjisbn
-          lorem Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Non quae culpa eveniet,
-          doloremque beatae perferendis esse quia quo, exercitationem saepe
-          fsknfjsbfhjs nfzjnfsjnbfsjn45u23895jsfndjio nfsjknfjosnfojksnfkjonskof
-          sjbnfhjsbfhjsbfjisbfvjisbn
-          loremLorem ipsum
-          dolor sit amet consectetur adipisicing elit. Non quae culpa eveniet,
-          doloremque beatae perferendis esse quia quo, exercitationem saepe
-          fsknfjsbfhjs nfzjnfsjnbfsjn45u23895jsfndjio nfsjknfjosnfojksnfkjonskof
-          sjbnfhjsbfhjsbfjisbfvjisbn
-          lorem
-          `
-  })
-  private message!: string;
+  @Prop() private notificationItem!: NotificationItemType
+  @Prop() private isPage?: boolean
 
   get itemStyleInPage() {
     return {
@@ -84,16 +57,16 @@ export default class extends Vue {
   get textContentStyleInPage() {
     return {
       fontSize: this.isPage ? '14px' : '12px',
-      fontWeight: this.unRead ? '700 !important' : '500 !important'
+      fontWeight: this.notificationItem.unRead ? '700 !important' : '500 !important'
     } as HTMLElement['style']
   }
 
   get convertMessage() {
-    return this.message.length > 72
-      ? this.isImportantMessage
-        ? `${this.message.slice(0, 65)} ....`
-        : `${this.message.slice(0, 72)} ....`
-      : this.message
+    return this.notificationItem.message.length > 72
+      ? this.notificationItem.isImportant
+        ? `${this.notificationItem.message.slice(0, 65)} ....`
+        : `${this.notificationItem.message.slice(0, 72)} ....`
+      : this.notificationItem.message
   }
 }
 </script>
@@ -105,7 +78,8 @@ export default class extends Vue {
   position: relative
   max-width: 100%
   transition: background-color $base-animation-timer-default
-  @include base-border(bottom, top)
+  @include border-light
+  @include base-border()
   &.unread
     background-color: rgba($link, 0.1)
   &:hover

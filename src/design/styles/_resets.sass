@@ -64,7 +64,11 @@ body
  ***********************************/
 .notices
   &.is-top
-    padding: 4rem 2rem
+    padding: 0
+  .toast
+    opacity: 1
+    border-radius: 2em !important
+    @include neu-style
 .notification
   border: $base-border-style
   border-color: $base-border-color
@@ -129,7 +133,11 @@ body
   transition: transform 0.3s !important
   &.rotate-90
     transform: rotate(90deg)
+
 .menu-list a
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
+
+.pagination-link
+  font-weight: 600

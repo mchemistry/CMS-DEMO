@@ -54,7 +54,7 @@
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import { BInputWithValidation } from '@/components/Inputs'
 import { BNotificationConfig } from 'buefy/types/components'
-import { VForm } from '@/types/vee-validate.type'
+import { VForm } from '@/types/config'
 @Component({
   name: 'auth',
   components: {
@@ -78,12 +78,10 @@ export default class extends Vue {
       return
     }
     setTimeout(() => {
-      this.$buefy.notification.open({
-        duration: 45000,
+      this.$buefy.toast.open({
+        duration: 2500,
         message: 'Đăng nhập thành công~ 😎!',
-        type: 'is-success',
-        hasIcon: true,
-        animation: 'slide-left'
+        type: 'is-success'
       } as BNotificationConfig)
       this.loading = false
       this.$router.push('/')
@@ -100,7 +98,7 @@ export default class extends Vue {
     font-size: 32px
     font-weight: 600
     color: $primary
-    top: 3rem
+    top: 4rem
     @include center(absolute, x)
   .login-card
     @include neu-style
