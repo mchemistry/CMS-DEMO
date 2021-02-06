@@ -93,7 +93,7 @@ export default class extends Vue {
         // console.log(data)
         this.notifications = [...data]
         this.totalNotifications = this.notifications.length
-        console.log(this.totalNotifications)
+        // console.log(this.totalNotifications)
       })
       .catch(error => {
         this.$buefy.toast.open({

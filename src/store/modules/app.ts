@@ -40,8 +40,6 @@ class App extends VuexModule implements IAppState {
   commitSetLayoutSize() {
     this.layoutSize.width = window.innerWidth
     this.layoutSize.height = window.innerHeight
-    // eslint-disable-next-line no-console
-    console.log(`${this.layoutSize.width} \n ${this.layoutSize.height}`)
   }
 }
 

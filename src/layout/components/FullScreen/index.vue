@@ -1,16 +1,27 @@
 <template>
-    <b-button
+  <div>
+    <b-icon
+      v-if="!isFullScreen"
       class="btn-fullscreen"
-      icon-right="fullscreen"
-      size="is-large"
+      icon="arrow-expand-all"
       :style="btnFullScreenStyle"
-      @click="toggleScreen"
-    />
+      @click.native="toggleScreen"
+    > </b-icon>
+    <b-icon
+      v-else
+      class="btn-fullscreen"
+      icon="arrow-collapse-all"
+      :style="btnFullScreenStyle"
+      @click.native="toggleScreen"
+    > </b-icon>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { toggleFullScreen } from '@/utils/full-screen'
+import { FullScreen } from '@/utils/event'
+
+const fs = FullScreen
 
 @Component({
   name: 'FullScreen'
@@ -28,6 +39,8 @@ export default class extends Vue {
   @Prop({ default: null }) private bottom!: string | number
   @Prop({ default: null }) private left!: string | number
 
+  private isFullScreen = false
+
   get btnFullScreenStyle() {
     return {
       position: `${this.position} !important`,
@@ -38,8 +51,20 @@ export default class extends Vue {
     } as HTMLElement['style']
   }
 
+  private toggleStatusOfScreen() {
+    this.isFullScreen = !this.isFullScreen
+  }
+
   private toggleScreen() {
-    return toggleFullScreen(this.elementId)
+    return fs.toggleFullScreen(this.elementId)
+  }
+
+  beforeMount() {
+    fs.getFullScreenStatus(this.toggleStatusOfScreen)
+  }
+
+  beforeDestroy() {
+    fs.destroyFullScreenEvent(this.toggleScreen)
   }
 }
 </script>

@@ -16,7 +16,7 @@ interface FsDocumentElement extends HTMLElement {
 }
 
 /**
- * Togglw FullScreen of an element
+ * @description Toggle FullScreen of an element
  * @param {string} id  - as id of HTMLelement
  * @return {void} element when toggle Screen
  */
@@ -38,4 +38,26 @@ export const toggleFullScreen = (id: string) => {
   else if (fsDoc.msExitFullscreen) fsDoc.msExitFullscreen()
   else if (fsDoc.mozCancelFullScreen) fsDoc.mozCancelFullScreen()
   else if (fsDoc.webkitExitFullscreen) fsDoc.webkitExitFullscreen()
+}
+
+/**
+ * @description add event before component is mounted
+ * @param fn as function need add eventlistener
+ */
+export const getFullScreenStatus = (fn: any): void => {
+  document.addEventListener('fullscreenchange', fn)
+  document.addEventListener('mozfullscreenchange', fn)
+  document.addEventListener('webkitfullscreenchange', fn)
+  document.addEventListener('msfullscreenchange', fn)
+}
+
+/**
+ * @description destroy event when component is destroyed
+ * @param fn as function need remove eventlistener
+ */
+export const destroyFullScreenEvent = (fn: any): void => {
+  document.removeEventListener('fullscreenchange', fn)
+  document.removeEventListener('mozfullscreenchange', fn)
+  document.removeEventListener('webkitfullscreenchange', fn)
+  document.removeEventListener('msfullscreenchange', fn)
 }

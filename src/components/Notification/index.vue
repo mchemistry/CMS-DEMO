@@ -76,7 +76,7 @@ export default class extends Vue {
         this.notifications = [...data]
         this.totalNotifications = this.notifications.length
         this.totalMessageUnread = this.notifications.filter(el => el.unRead === true).length
-        console.log(this.totalNotifications)
+        // console.log(this.totalNotifications)
       })
       .catch(error => {
         this.$buefy.toast.open({
