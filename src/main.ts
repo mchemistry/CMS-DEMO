@@ -1,10 +1,13 @@
 import Vue, { DirectiveOptions } from 'vue'
+import VueMoment from 'vue-moment'
+import moment from 'moment'
+import 'moment/locale/vi'
 import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
 import * as directives from '@/directives'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import { required, confirmed, length, email } from 'vee-validate/dist/rules'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import validator from '@/plugins/vee-validate'
 // Buefy module
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
@@ -17,50 +20,10 @@ Vue.config.productionTip = false
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.use(Buefy)
-// override vee-extend
-extend('required', {
-  ...required,
-  message: 'Thông tin không được để trống'
+Vue.use(VueMoment, {
+  moment
 })
-
-extend('email', {
-  ...email,
-  message: 'Email nhập không hợp lý'
-})
-
-extend('confirmed', {
-  ...confirmed,
-  message: 'Mật khẩu nhập lại chưa đúng'
-})
-
-extend('length', {
-  ...length,
-  message: 'This field must have 2 options'
-})
-
-extend('passwords', {
-  validate: (value) => {
-    const patt = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
-    return patt.test(String(value))
-  },
-  message: 'Mật khẩu ít nhất 8 kí tự gồm cả chữ hoa, thường và số'
-})
-
-extend('failure-email', {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  validate: (value) => {
-    return false
-  },
-  message: 'Email không tồn tại trên hệ thống !'
-})
-
-extend('username', {
-  validate: (value) => {
-    const patt = /^[a-z0-9_-]{3,16}$/gim
-    return patt.test(String(value))
-  },
-  message: 'Tên tài khoản không phù hợp'
-})
+Vue.use(validator as any)
 
 /**
  * Define global directives

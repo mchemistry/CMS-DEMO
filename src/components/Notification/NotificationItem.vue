@@ -28,7 +28,7 @@
         style="z-index: 0 !important"
       >
         <b-icon icon="clock" size="is-small"></b-icon>
-        <p>{{ notificationItem.createdAt}}</p>
+        <p>{{ notificationItem.createdAt | moment("Do/MM/YYYY, H:mm")}}</p>
       </div>
     </div>
   </div>
@@ -57,15 +57,16 @@ export default class extends Vue {
   get textContentStyleInPage() {
     return {
       fontSize: this.isPage ? '14px' : '12px',
+      textOverflow: this.isPage ? 'initial' : 'ellipsis',
       fontWeight: this.notificationItem.unRead ? '700 !important' : '500 !important'
     } as HTMLElement['style']
   }
 
   get convertMessage() {
-    return this.notificationItem.message.length > 72
-      ? this.notificationItem.isImportant
-        ? `${this.notificationItem.message.slice(0, 65)} ....`
-        : `${this.notificationItem.message.slice(0, 72)} ....`
+    return this.notificationItem.message.length > 70
+      ? (this.notificationItem.isImportant
+        ? `${this.notificationItem.message.slice(0, 48)}....`
+        : `${this.notificationItem.message.slice(0, 70)}....`)
       : this.notificationItem.message
   }
 }

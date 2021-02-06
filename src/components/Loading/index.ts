@@ -1,1 +1,1 @@
-export { default as theeDotLoading } from './src/ThreeDotLoading.vue'
+export { default as threeDotLoading } from './src/ThreeDotLoading.vue'

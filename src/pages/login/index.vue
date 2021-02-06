@@ -2,7 +2,7 @@
     <div class="auth-page is-flex is-justify-content-center is-align-items-center">
       <p class="auth-page-title">{{ name }}</p>
       <ValidationObserver ref="observer" class="login-card">
-        <section class="section">
+        <form class="form-login">
           <p
             slot="title"
             class="has-text-centered is-size-4 mb-6 text-primary has-text-weight-regular"
@@ -45,7 +45,7 @@
               >Đăng nhập</b-button
             >
           </div>
-        </section>
+        </form>
     </ValidationObserver>
     </div>
 </template>
@@ -102,6 +102,6 @@ export default class extends Vue {
     @include center(absolute, x)
   .login-card
     @include neu-style
-    .section
+    .form-login
       padding: 1.5rem
 </style>
