@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
-import { DeviceType, SideBarStatusType } from '@/enums/appEnum'
+import { DeviceType, SideBarStatusType, ElementStatusType } from '@/enums/appEnum'
 import store from '@/store'
 interface LayoutSizeType {
   width: Number
@@ -10,6 +10,7 @@ export interface IAppState {
   device: DeviceType
   sidebarStatus: String
   layoutSize: LayoutSizeType
+  notificationCardStatus: ElementStatusType
 }
 
 const NAME = 'app'
@@ -19,6 +20,7 @@ class App extends VuexModule implements IAppState {
   sidebarStatus = SideBarStatusType.HIDDEN
   device = DeviceType.DESKTOP
   layoutSize = <LayoutSizeType>{}
+  notificationCardStatus = ElementStatusType.HIDDEN
 
   get getSideBarStatus() {
     return this.sidebarStatus
@@ -26,6 +28,14 @@ class App extends VuexModule implements IAppState {
 
   get getLayoutSize() {
     return this.layoutSize
+  }
+
+  get getNotificationCardStatus() {
+    return this.notificationCardStatus
+  }
+
+  get isShowNotificationCard() {
+    return this.notificationCardStatus === ElementStatusType.SHOW
   }
 
   @Mutation
@@ -37,9 +47,22 @@ class App extends VuexModule implements IAppState {
   }
 
   @Mutation
+  commitToggleNotificationCard() {
+    this.notificationCardStatus =
+      this.notificationCardStatus === ElementStatusType.HIDDEN
+        ? ElementStatusType.SHOW
+        : ElementStatusType.HIDDEN
+  }
+
+  @Mutation
   commitSetLayoutSize() {
     this.layoutSize.width = window.innerWidth
     this.layoutSize.height = window.innerHeight
+  }
+
+  @Mutation
+  commitCloseNotificationCard() {
+    this.notificationCardStatus = ElementStatusType.HIDDEN
   }
 }
 

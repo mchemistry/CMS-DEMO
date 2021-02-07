@@ -66,7 +66,7 @@ import NeumorphismCard from '@/components/NeumorphismCard/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { BNotificationConfig } from 'buefy/types/components'
 import { NotificationItemType } from '@/types/config'
-const URL_API = 'https://601ce64d1a9c220017060f71.mockapi.io/api/v1/notifications'
+const URL_API = 'http://localhost:3000/notifications'
 
 @Component({
   name: 'Notifications',

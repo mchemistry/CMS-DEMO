@@ -11,7 +11,7 @@
       <div
         class="notifications mr-6 is-flex is-align-items-center"
       >
-        <div @click.stop="showNoti = !showNoti" class="notifications__handler is-flex is-align-items-center">
+        <div @click.stop="toggleNotificationCard" class="notifications__handler is-flex is-align-items-center">
           <b-icon icon="bell" class="notifications__handler-icon"/>
           <span
             v-if="totalNotificationsUnread"
@@ -19,7 +19,9 @@
             >{{ totalNotificationsUnread | totalNotificationsConvert }}</span
           >
         </div>
-        <notification class="notifications__card" :show="showNoti" v-click-outside="closeNotificationCard" />
+        <keep-alive>
+          <notification class="notifications__card" :show="isShowNotificationCard" v-click-outside="closeNotificationCard" />
+        </keep-alive>
       </div>
       <full-screen class="mr-6" />
       <div
@@ -101,15 +103,23 @@ export default class extends Vue {
 
   get navbarStyle() {
     const widthComplement =
-        AppModule.getSideBarStatus === SideBarStatusType.HIDDEN
-          ? 0
-          : AppModule.getSideBarStatus === SideBarStatusType.EXPANDED
-            ? 80
-            : 200
+          AppModule.getSideBarStatus === SideBarStatusType.HIDDEN
+            ? 0
+            : AppModule.getSideBarStatus === SideBarStatusType.EXPANDED
+              ? 80
+              : 200
     return {
       width: `calc(100% - ${widthComplement}px)`,
       position: this.position
     } as HTMLElement['style']
+  }
+
+  get isShowNotificationCard() {
+    return AppModule.isShowNotificationCard
+  }
+
+  private toggleNotificationCard() {
+    AppModule.commitToggleNotificationCard()
   }
 
   private toggleMenu() {
@@ -117,7 +127,7 @@ export default class extends Vue {
   }
 
   private closeNotificationCard() {
-    this.showNoti = false
+    AppModule.commitCloseNotificationCard()
   }
 
   private closeUserCard() {
@@ -200,7 +210,7 @@ export default class extends Vue {
           left: -1.2em
           height: 22px
           width: 22px
-          background-color:  $primary
+          background-color: $primary
           color: $base-background-color
           padding: 0.2em
           border: 0.2em solid $base-background-color

@@ -1,6 +1,6 @@
 <template>
   <transition name="upper" :duration="{leave: 0}" mode="out-in">
-    <div class="notifications__card" v-show="show">
+    <div class="notifications__card" v-if="isShowNotificationCard">
       <div
         class="notifications__card-title is-flex is-justify-content-space-between pb-2 is-align-items-center"
       >
@@ -20,21 +20,24 @@
         <b-icon icon="autorenew" custom-class="spin"></b-icon>
         <p class="is-size-7">Đang tải dữ liệu ...</p>
       </div>
-      <keep-alive>
-        <div v-if="!loadingNotifications" class="notifications__card__list-show pt-1">
-          <notification-item
-            v-for="notification in displayNotifications"
-            :key="notification.id"
-            :notification-item='notification'
-          ></notification-item>
-        </div>
-      </keep-alive>
-      <router-link
-        v-if="!loadingNotifications"
-        to="/notifications"
-        class="is-size-7 link is-flex is-justify-content-center pb-1 pt-2 has-text-weight-semibold notifications__card-link"
-        >Xem tất cả >></router-link
+      <!-- Notifications Base -->
+      <div v-if="!loadingNotifications" class="notifications__card__list-show pt-1">
+        <notification-item
+          v-for="notification in notifications"
+          :key="notification.id + notification.unRead.toString()  /* Trick: Vue only reactive with element changed id */"
+          :notification-item='notification'
+        ></notification-item>
+      </div>
+
+      <!--  -->
+      <div class="is-flex is-justify-content-center pb-1 pt-2" @click.stop="toggleNotiCard">
+        <router-link
+          v-if="!loadingNotifications"
+          to="/notifications"
+          class="is-size-7 link has-text-weight-semibold notifications__card-link"
+          >Xem tất cả >></router-link
       >
+      </div>
     </div>
   </transition>
 </template>
@@ -42,11 +45,12 @@
 <script lang="ts">
 import NotificationItem from './NotificationItem.vue'
 import { threeDotLoading } from '../Loading'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { NotificationItemType } from '@/types/config'
 import { BNotificationConfig } from 'buefy/types/components'
+import { AppModule } from '@/store/modules/app'
 
-const URL_API = 'https://601ce64d1a9c220017060f71.mockapi.io/api/v1/notifications'
+const URL_API = 'http://localhost:3000/notifications'
 @Component({
   name: 'notification',
   components: {
@@ -56,26 +60,29 @@ const URL_API = 'https://601ce64d1a9c220017060f71.mockapi.io/api/v1/notification
 })
 
 export default class extends Vue {
-  @Prop({}) private show?: boolean
   private totalNotifications!: number
   private notifications!: Array<NotificationItemType>
   private loadingNotifications = true
   private markAllAsReadLoading = false
-  private totalMessageUnread?: number
+  private totalMessageUnread = 0
 
-  get displayNotifications() {
-    return this.totalNotifications > 10
-      ? this.notifications.slice(0, 10)
-      : this.notifications.slice(0, this.totalNotifications)
+  get isShowNotificationCard() {
+    return AppModule.isShowNotificationCard
+  }
+
+  private toggleNotiCard() {
+    return AppModule.commitToggleNotificationCard()
   }
 
   private getNotifications(): void {
     fetch(`${URL_API}`)
       .then(res => res.json())
       .then(data => {
-        this.notifications = [...data]
-        this.totalNotifications = this.notifications.length
-        this.totalMessageUnread = this.notifications.filter(el => el.unRead === true).length
+        this.totalNotifications = data.length
+        this.totalMessageUnread = data.filter((el: NotificationItemType) => el.unRead === true).length
+        this.notifications = this.totalNotifications > 10
+          ? data.slice(0, 10)
+          : data.slice(0, this.totalNotifications)
         // console.log(this.totalNotifications)
       })
       .catch(error => {
@@ -95,6 +102,10 @@ export default class extends Vue {
     setTimeout(() => {
       this.markAllAsReadLoading = false
       this.totalMessageUnread = 0
+      this.notifications = this.notifications.map(subNotification => {
+        subNotification.unRead = false
+        return subNotification
+      })
     }, 3000)
   }
 

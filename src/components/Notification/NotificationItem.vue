@@ -20,7 +20,7 @@
             >Quan trọng</span
           >
           {{ notificationItem.isImportant ? '&nbsp;&#8211;&nbsp;' : '' }}
-          {{ isPage ? notificationItem.message : convertMessage }}
+          {{ notificationItem.message }}
         </p>
       </div>
       <div
@@ -57,17 +57,13 @@ export default class extends Vue {
   get textContentStyleInPage() {
     return {
       fontSize: this.isPage ? '14px' : '12px',
-      textOverflow: this.isPage ? 'initial' : 'ellipsis',
-      fontWeight: this.notificationItem.unRead ? '700 !important' : '500 !important'
+      fontWeight: this.notificationItem.unRead ? '700 !important' : '500 !important',
+      display: '-webkit-box',
+      maxWidth: 'calc(100%)',
+      overflow: 'hidden',
+      webkitBoxOrient: 'vertical',
+      webkitLineClamp: this.isPage ? 'initial' : '2'
     } as HTMLElement['style']
-  }
-
-  get convertMessage() {
-    return this.notificationItem.message.length > 70
-      ? (this.notificationItem.isImportant
-        ? `${this.notificationItem.message.slice(0, 48)}....`
-        : `${this.notificationItem.message.slice(0, 70)}....`)
-      : this.notificationItem.message
   }
 }
 </script>
