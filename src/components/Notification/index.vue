@@ -74,6 +74,14 @@ export default class extends Vue {
     return AppModule.commitToggleNotificationCard()
   }
 
+  private setAllNotificationsAsUnread(notifications: Array<NotificationItemType>, fieldsToUpdate: Partial<NotificationItemType>) {
+    const result = []
+    for (const notification of notifications) {
+      result.push({ ...notification, ...fieldsToUpdate })
+    }
+    return result
+  }
+
   private getNotifications(): void {
     fetch(`${URL_API}`)
       .then(res => res.json())
@@ -102,9 +110,8 @@ export default class extends Vue {
     setTimeout(() => {
       this.markAllAsReadLoading = false
       this.totalMessageUnread = 0
-      this.notifications = this.notifications.map(subNotification => {
-        subNotification.unRead = false
-        return subNotification
+      this.notifications = this.setAllNotificationsAsUnread(this.notifications, {
+        unRead: false
       })
     }, 3000)
   }

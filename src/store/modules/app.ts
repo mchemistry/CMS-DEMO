@@ -1,6 +1,7 @@
 import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators'
 import { DeviceType, SideBarStatusType, ElementStatusType } from '@/enums/appEnum'
 import store from '@/store'
+import { NotificationItemType } from '@/types/config'
 interface LayoutSizeType {
   width: Number
   height: Number
@@ -64,6 +65,14 @@ class App extends VuexModule implements IAppState {
   commitCloseNotificationCard() {
     this.notificationCardStatus = ElementStatusType.HIDDEN
   }
+
+  // @Mutation
+  // commitSetAllNotificationsAsUnread(notifications: Array<NotificationItemType>, fieldsToUpdate: Partial<NotificationItemType>) {
+  //   const result = []
+  //   for (const t of notifications) { result.push({ ...t, ...fieldsToUpdate }) }
+  //   console.log(result)
+  //   return result
+  // }
 }
 
 export const AppModule = getModule(App)
