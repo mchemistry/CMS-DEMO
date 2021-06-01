@@ -1,4 +1,4 @@
-# fadi-cms-v1
+# CMS DEMO
 
 ## Project setup
 
